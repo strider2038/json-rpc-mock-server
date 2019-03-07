@@ -1,0 +1,11 @@
+{
+  "jsonrpc": "2.0",
+  "method": "reflect",
+  "id": 1,
+  "params": {
+    "key": "value",
+    "object": {
+      "key": "value"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "jsonrpc": "2.0",
+    "method": "subtract",
+    "id": 1,
+    "params": [49, 23]
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "subtract",
+    "id": 2,
+    "params": []
+  }
+]

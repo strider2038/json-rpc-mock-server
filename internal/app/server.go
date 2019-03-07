@@ -7,6 +7,7 @@ import (
 	"bitbucket.org/creachadair/jrpc2/metrics"
 	jrpcServer "bitbucket.org/creachadair/jrpc2/server"
 	"context"
+	"errors"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"log"
@@ -39,6 +40,8 @@ func NewJsonRpcServer(config Config) JsonRpcServer {
 		"sum":      handler.New(server.sum),
 		"subtract": handler.New(server.subtract),
 		"sleep":    handler.New(server.sleep),
+		"reflect":  handler.New(server.reflect),
+		"notify":   handler.New(server.notify),
 	}
 
 	return server
@@ -88,17 +91,11 @@ func (server *tcpServer) sum(context context.Context, arguments []int) (int, err
 }
 
 func (server *tcpServer) subtract(context context.Context, arguments []int) (int, error) {
-	var result int
-
-	result = 0
-
-	if len(arguments) > 0 {
-		result = arguments[0]
+	if len(arguments) != 2 {
+		return 0, errors.New("there must be exactly two arguments")
 	}
 
-	for i := 1; i < len(arguments); i++ {
-		result -= arguments[i]
-	}
+	result := arguments[1] - arguments[0]
 
 	return result, nil
 }
@@ -118,4 +115,12 @@ func (server *tcpServer) sleep(context context.Context, arguments []int) (SleepD
 	duration.EndTime = time.Now().UnixNano()
 
 	return duration, nil
+}
+
+func (server *tcpServer) reflect(context context.Context, arguments map[string]interface{}) (map[string]interface{}, error) {
+	return arguments, nil
+}
+
+func (server *tcpServer) notify(context context.Context, arguments map[string]interface{}) error {
+	return nil
 }
