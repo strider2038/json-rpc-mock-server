@@ -7,7 +7,6 @@ import (
 	"bitbucket.org/creachadair/jrpc2/metrics"
 	jrpcServer "bitbucket.org/creachadair/jrpc2/server"
 	"context"
-	"errors"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"log"
@@ -22,6 +21,11 @@ type JsonRpcServer interface {
 type SleepDuration struct {
 	StartTime int64
 	EndTime   int64
+}
+
+type SubtractionParameters struct {
+	Subtrahend int `json:"subtrahend"`
+	Minuend    int `json:"minuend"`
 }
 
 type tcpServer struct {
@@ -90,12 +94,8 @@ func (server *tcpServer) sum(context context.Context, arguments []int) (int, err
 	return summary, nil
 }
 
-func (server *tcpServer) subtract(context context.Context, arguments []int) (int, error) {
-	if len(arguments) != 2 {
-		return 0, errors.New("there must be exactly two arguments")
-	}
-
-	result := arguments[1] - arguments[0]
+func (server *tcpServer) subtract(context context.Context, arguments SubtractionParameters) (int, error) {
+	result := arguments.Minuend - arguments.Subtrahend
 
 	return result, nil
 }
