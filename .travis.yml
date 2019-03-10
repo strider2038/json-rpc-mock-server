@@ -1,0 +1,11 @@
+language: go
+go:
+  - "1.12.x"
+
+services:
+  - docker
+
+script:
+  - docker build --pull --tag "strider2038/json-rpc-mock-server" .
+  - docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASSWORD"
+  - docker push strider2038/json-rpc-mock-server
