@@ -1,17 +1,18 @@
 package app
 
 import (
-	"bitbucket.org/creachadair/jrpc2"
-	"bitbucket.org/creachadair/jrpc2/channel"
-	"bitbucket.org/creachadair/jrpc2/handler"
-	"bitbucket.org/creachadair/jrpc2/metrics"
-	jrpcServer "bitbucket.org/creachadair/jrpc2/server"
 	"context"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"log"
 	"net"
 	"time"
+
+	"github.com/creachadair/jrpc2"
+	"github.com/creachadair/jrpc2/channel"
+	"github.com/creachadair/jrpc2/handler"
+	"github.com/creachadair/jrpc2/metrics"
+	jrpcServer "github.com/creachadair/jrpc2/server"
+	"github.com/sirupsen/logrus"
 )
 
 type JsonRpcServer interface {
