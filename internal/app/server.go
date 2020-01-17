@@ -42,6 +42,7 @@ func NewJsonRpcServer(config Config) JsonRpcServer {
 	}
 
 	server.serviceMap = handler.Map{
+		"ping":     handler.New(server.ping),
 		"sum":      handler.New(server.sum),
 		"subtract": handler.New(server.subtract),
 		"sleep":    handler.New(server.sleep),
@@ -83,6 +84,10 @@ func (server *tcpServer) Run() error {
 	}
 
 	return nil
+}
+
+func (server *tcpServer) ping(context context.Context) (string, error) {
+	return "pong", nil
 }
 
 func (server *tcpServer) sum(context context.Context, arguments []int) (int, error) {
