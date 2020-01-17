@@ -8,5 +8,8 @@ import (
 func main() {
 	config := app.LoadConfigFromEnvironment()
 	server := app.NewJsonRpcServer(config)
-	log.Fatal(server.Run())
+	err := server.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
