@@ -1,0 +1,22 @@
+POST http://localhost:4000/rpc
+Content-Type: application/json
+
+[
+  {
+    "jsonrpc": "2.0",
+    "method": "subtract",
+    "id": 1,
+    "params": {
+      "subtrahend": 23,
+      "minuend": 42
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "subtract",
+    "id": 2,
+    "params": {}
+  }
+]
+
+###

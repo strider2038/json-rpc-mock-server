@@ -1,0 +1,11 @@
+POST http://localhost:4000/rpc
+Authorization: Bearer token
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "ping"
+}
+
+###
