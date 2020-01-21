@@ -1,36 +1,18 @@
 package app
 
 import (
-	"os"
-	"strconv"
+	"github.com/kelseyhightower/envconfig"
 )
 
 type Config struct {
-	Port         uint16
-	ThreadsCount uint16
+	Protocol    string `default:"tcp"`
+	BearerToken string `split_words:"true"`
+	Port        uint16 `default:"4000"`
 }
 
 func LoadConfigFromEnvironment() Config {
-	return Config{
-		Port:         getPort(),
-		ThreadsCount: getThreadsCount(),
-	}
-}
+	config := Config{}
+	envconfig.MustProcess("JSON_RPC", &config)
 
-func getPort() uint16 {
-	unparsedPort := os.Getenv("JSON_RPC_PORT")
-	port, _ := strconv.ParseUint(unparsedPort, 10, 32)
-
-	if port == 0 {
-		port = 4000
-	}
-
-	return uint16(port)
-}
-
-func getThreadsCount() uint16 {
-	unparsedThreads := os.Getenv("JSON_RPC_THREADS")
-	threads, _ := strconv.ParseUint(unparsedThreads, 10, 32)
-
-	return uint16(threads)
+	return config
 }

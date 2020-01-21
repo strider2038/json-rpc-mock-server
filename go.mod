@@ -6,6 +6,8 @@ require (
 	github.com/creachadair/jrpc2 v0.4.5
 	github.com/creachadair/staticfile v0.1.3 // indirect
 	github.com/google/go-cmp v0.4.0 // indirect
+	github.com/gorilla/mux v1.7.3
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/stretchr/objx v0.2.0 // indirect
