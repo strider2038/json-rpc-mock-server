@@ -15,6 +15,8 @@ func main() {
 		server = app.NewTCPServer(config)
 	case "http":
 		server = app.NewHTTPServer(config)
+	case "unix":
+		server = app.NewUnixSocketServer(config)
 	default:
 		log.Fatalf("unsupported protocol: %s", protocol)
 	}
