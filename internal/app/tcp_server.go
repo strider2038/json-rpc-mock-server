@@ -2,13 +2,14 @@ package app
 
 import (
 	"fmt"
+	"log"
+	"net"
+	"os"
+
 	"github.com/creachadair/jrpc2"
 	"github.com/creachadair/jrpc2/channel"
 	"github.com/creachadair/jrpc2/metrics"
 	"github.com/creachadair/jrpc2/server"
-	"log"
-	"net"
-	"os"
 )
 
 type tcpServer struct {
@@ -29,14 +30,14 @@ func (s *tcpServer) Run() error {
 	if err != nil {
 		return err
 	}
+	acc := server.NetAccepter(listener, channel.Line)
 
 	logger := log.New(os.Stderr, "[tcp server] ", log.LstdFlags|log.Lshortfile)
 	logger.Printf("starting TCP server on port %d...", s.config.Port)
 
-	return server.Loop(listener, s.serviceMap, &server.LoopOptions{
-		Framing: channel.Line,
+	return server.Loop(acc, server.Static(s.serviceMap), &server.LoopOptions{
 		ServerOptions: &jrpc2.ServerOptions{
-			Logger:    logger,
+			Logger:    jrpc2.StdLogger(logger),
 			Metrics:   metrics.New(),
 			AllowPush: false,
 		},

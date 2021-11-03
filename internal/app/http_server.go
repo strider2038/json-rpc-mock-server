@@ -2,15 +2,15 @@ package app
 
 import (
 	"fmt"
-	"github.com/creachadair/jrpc2"
-	"github.com/creachadair/jrpc2/jhttp"
-	"github.com/creachadair/jrpc2/metrics"
-	"github.com/creachadair/jrpc2/server"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
+
+	"github.com/creachadair/jrpc2"
+	"github.com/creachadair/jrpc2/jhttp"
+	"github.com/creachadair/jrpc2/metrics"
+	"github.com/gorilla/mux"
 )
 
 type httpServer struct {
@@ -27,15 +27,15 @@ func NewHTTPServer(config Config) Server {
 
 func (s *httpServer) Run() error {
 	logger := log.New(os.Stderr, "[http server] ", log.LstdFlags|log.Lshortfile)
-	local := server.NewLocal(s.serviceMap, &server.LocalOptions{
+	bridge := jhttp.NewBridge(s.serviceMap, &jhttp.BridgeOptions{
 		Server: &jrpc2.ServerOptions{
-			Logger:  logger,
+			Logger:  jrpc2.StdLogger(logger),
 			Metrics: metrics.New(),
 		},
 	})
 
 	router := mux.NewRouter()
-	router.Handle("/rpc", jhttp.NewBridge(local.Client))
+	router.Handle("/rpc", bridge)
 
 	if s.config.BearerToken != "" {
 		router.Use(s.bearerAuthorization)
